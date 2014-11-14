@@ -65,10 +65,10 @@ namespace AsanaNet
             _callback = callback;
             _error = error;
 
-            if (_throttling)
+/*            if (_throttling)
             {
                 _throttlingWaitHandle.WaitOne();
-            }
+            }*/
 
             return Task.Factory.FromAsync<WebResponse>(
                     _request.BeginGetResponse,
@@ -88,10 +88,12 @@ namespace AsanaNet
                         
                         if (result.Headers["Retry-After"] != null)
                         {
-                            string retryAfter = result.Headers["Retry-After"];
+                            _error("Asana overloaded", "", "");
+                            return;
+/*                            string retryAfter = result.Headers["Retry-After"];
                             ThrottleFor(Convert.ToInt32(retryAfter));
                             Go(callback, error);
-                            return;
+                            return;*/
                         }
                         string responseContent = GetResponseContent(result);
                         _callback(responseContent, result.Headers);

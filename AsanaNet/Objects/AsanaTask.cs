@@ -29,7 +29,7 @@ namespace AsanaNet
         [AsanaDataAttribute     ("created_at",      SerializationFlags.Omit)]
         public AsanaDateTime    CreatedAt           { get; private set; }
 
-        [AsanaDataAttribute     ("completed",       SerializationFlags.Omit)]
+        [AsanaDataAttribute     ("completed",       SerializationFlags.Required)]
         public bool             Completed           { get; set; }
 
         [AsanaDataAttribute     ("completed_at",    SerializationFlags.Omit)]

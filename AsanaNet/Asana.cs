@@ -66,6 +66,8 @@ namespace AsanaNet
 
         #region Methods
 
+        private static bool needToInit = true;
+        private static object myLock = new object();
         /// <summary>
         /// Creates a new Asana entry point.
         /// </summary>
@@ -83,7 +85,14 @@ namespace AsanaNet
 				EncodedAPIKey = Convert.ToBase64String (System.Text.Encoding.ASCII.GetBytes(apiKeyOrBearerToken + ":"));
 			}
 
-            AsanaFunction.InitFunctions();
+            lock (myLock)
+            {
+                if (needToInit)
+                {
+                    needToInit = false;
+                    AsanaFunction.InitFunctions();
+                }
+            }
         }
 
         /// <summary>
